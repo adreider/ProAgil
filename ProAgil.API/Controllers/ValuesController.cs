@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProAgil.API.Data;
-using ProAgil.API.model;
+using ProAgil.Repository.Data;
+
 
 namespace ProAgil.API.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase {
-        private readonly DataContext context;
+        private readonly ProAgilContext context;
 
-        public ValuesController (DataContext context) {
+        public ValuesController (ProAgilContext context) {
             this.context = context;
         }
 
@@ -32,11 +32,11 @@ namespace ProAgil.API.Controllers {
 
         // GET api/values/5
         [HttpGet ("{id}")]
-        public async Task<IActionResult> Get (string id) 
+        public async Task<IActionResult> Get (int id) 
         {
             try
             {
-                var results = await context.Enventos.FirstOrDefaultAsync(x => x.id == id);
+                var results = await context.Enventos.FirstOrDefaultAsync(x => x.Id == id);
                 return Ok (results);
             } 
             catch (System.Exception) 
